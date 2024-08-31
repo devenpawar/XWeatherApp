@@ -1,23 +1,148 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Box, TextField, Button, Paper, Typography } from "@mui/material";
+import { useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [city, setCity] = useState("");
+  const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const apiKey = "2669e0d7689642c9827134801240702";
+
+  const selectCity = (e) => {
+    const selectedCity = e.target.value;
+    setCity(selectedCity);
+  };
+
+  const fetchWeather = async () => {
+    if (!city) {
+      alert("Please enter a city name.");
+      return;
+    }
+
+    setLoading(true); // Start loading
+    try {
+      let response = await axios.get(
+        `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
+      );
+      setWeather(response.data);
+      console.log(response.data);
+    } catch (error) {
+      alert("Weather cannot be fetched!");
+    } finally {
+      setLoading(false); // Stop loading
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Box
+        className="weather-app-container"
+        style={{
+          margin: "1rem",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          justifyContent: "center",
+        }}
+      >
+        <TextField
+          id="outlined-basic"
+          label="Enter city name"
+          variant="outlined"
+          onChange={selectCity}
+        />
+        <Button
+          variant="contained"
+          style={{ backgroundColor: "#1DB954" }}
+          onClick={fetchWeather}
         >
-          Learn React
-        </a>
-      </header>
+          Search
+        </Button>
+      </Box>
+
+      {loading ? (
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "2rem",
+          }}
+        >
+          <p>Loading Data ... </p>
+        </Box>
+      ) : (
+        weather && (
+          <Box
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "20px",
+              marginTop: "2rem",
+            }}
+          >
+            <Paper
+              style={{
+                height: "100px",
+                width: "200px",
+                padding: "1rem",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography>Temperature:</Typography>
+              <Typography>{weather.current.temp_c} °C</Typography>
+            </Paper>
+            <Paper
+              style={{
+                height: "100px",
+                width: "200px",
+                padding: "1rem",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography>Humidity:</Typography>
+              <Typography>{weather.current.humidity} %</Typography>
+            </Paper>
+            <Paper
+              style={{
+                height: "100px",
+                width: "200px",
+                padding: "1rem",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography>Condition:</Typography>
+              <Typography>{weather.current.condition.text}</Typography>
+            </Paper>
+            <Paper
+              style={{
+                height: "100px",
+                width: "200px",
+                padding: "1rem",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography>Wind Speed:</Typography>
+              <Typography>{weather.current.wind_kph} kph</Typography>
+            </Paper>
+          </Box>
+        )
+      )}
     </div>
   );
 }
