@@ -1,5 +1,5 @@
 import "./App.css";
-import { Box, TextField, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 
@@ -47,10 +47,11 @@ function App() {
           justifyContent: "center",
         }}
       >
-        <TextField
+        <input
           id="outlined-basic"
           label="Enter city name"
-          variant="outlined"
+          type="text"
+          style={{ padding: "0.8rem" }}
           onChange={selectCity}
         />
         <Button
@@ -77,6 +78,7 @@ function App() {
         weather && (
           <Box
             style={{
+              className: "weather-cards",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -85,6 +87,7 @@ function App() {
             }}
           >
             <Paper
+              className="weather-card"
               style={{
                 height: "100px",
                 width: "200px",
@@ -99,6 +102,7 @@ function App() {
               <Typography>{weather.current.temp_c} °C</Typography>
             </Paper>
             <Paper
+              className="weather-card"
               style={{
                 height: "100px",
                 width: "200px",
@@ -113,6 +117,7 @@ function App() {
               <Typography>{weather.current.humidity} %</Typography>
             </Paper>
             <Paper
+              className="weather-card"
               style={{
                 height: "100px",
                 width: "200px",
@@ -127,6 +132,7 @@ function App() {
               <Typography>{weather.current.condition.text}</Typography>
             </Paper>
             <Paper
+              className="weather-card"
               style={{
                 height: "100px",
                 width: "200px",
