@@ -24,7 +24,7 @@ function App() {
     setLoading(true); // Start loading
     try {
       let response = await axios.get(
-        `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
+        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
       );
       setWeather(response.data);
       console.log(response.data);
