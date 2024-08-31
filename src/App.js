@@ -29,7 +29,7 @@ function App() {
       setWeather(response.data);
       console.log(response.data);
     } catch (error) {
-      alert("Weather cannot be fetched!");
+      alert("Failed to fetch weather data");
     } finally {
       setLoading(false); // Stop loading
     }
