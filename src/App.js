@@ -72,13 +72,13 @@ function App() {
             marginTop: "2rem",
           }}
         >
-          <p>Loading Data ... </p>
+          <p>Loading data... </p>
         </Box>
       ) : (
         weather && (
           <Box
+            className= "weather-cards"
             style={{
-              className: "weather-cards",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
